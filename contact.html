@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contact • MONSTEREYE100</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <meta name="description" content="Contact page for idk bro." />
+</head>
+<body class="bg-slate-900 text-slate-100 antialiased">
+  <!-- Navigation -->
+  <header class="bg-slate-800 shadow-sm sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-[#f89710] flex items-center justify-center text-white font-bold">Y</div>
+        <span class="font-semibold text-lg">monsters thing</span>
+      </
+
+      <nav class="hidden md:flex gap-6 items-center text-sm">
+        <a href="index.html" class="hover:text-[#f89710]">Home</a>
+        <a href="contact.html" class="text-[#f89710] font-semibold">Dont_click</a>
+      </nav>
+
+      <button id="mobile-toggle" class="md:hidden p-2 rounded-lg focus:outline-none">
+        <svg id="menu-open" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+        <svg id="menu-close" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="md:hidden hidden px-6 pb-6 bg-slate-800">
+      <nav class="flex flex-col gap-2">
+        <a href="index.html">Home</a>
+        <a href="contact.html" class="font-semibold text-[#f89710]">Dont_click</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Contact section -->
+  <main>
+    <section id="contact" class="max-w-3xl mx-auto px-6 py-16">
+      <h1 class="text-3xl font-extrabold">Dm me boyo</h1>
+      <p class="mt-2 text-slate-400">Fill out the form below and I’ll say um idk.</p>
+
+      <form id="contact-form" class="mt-6 grid gap-4">
+        <input required aria-label="Name" name="name" placeholder="Your name" class="p-3 rounded-lg border border-slate-700 bg-slate-800 text-slate-100" />
+        <input aria-label="Subject" name="main thing" placeholder="main thing" class="p-3 rounded-lg border border-slate-700 bg-slate-800 text-slate-100" />
+        <textarea required aria-label="your user" name="your user" rows="6" placeholder="SAY IT" class="p-3 rounded-lg border border-slate-700 bg-slate-800 text-slate-100"></textarea>
+        <div class="flex items-center gap-4">
+          <button type="submit" class="px-5 py-3 bg-[#f89710] text-white rounded-lg">SAY ITT</button>
+          <p id="form-status" class="text-sm text-slate-400"></p>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-slate-800 border-t border-slate-700 mt-12">
+    <div class="max-w-6xl mx-auto px-6 py-6 flex flex-col md:flex-row items-center justify-between text-sm text-slate-400">
+      <div>© <span id="year"></span> MONSTEREYE100 BOYO All rights reserved.</div>
+      <div class="flex gap-4 mt-3 md:mt-0">
+        <a href="#">NO Privacy</a>
+        <a href="#">MY Terms</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    const toggle = document.getElementById('mobile-toggle');
+    const menu = document.getElementById('mobile-menu');
+    const openIcon = document.getElementById('menu-open');
+    const closeIcon = document.getElementById('menu-close');
+
+    toggle && toggle.addEventListener('click', () => {
+      menu.classList.toggle('hidden');
+      openIcon.classList.toggle('hidden');
+      closeIcon.classList.toggle('hidden');
+    });
+
+    // Contact form handler with Discord webhook using embeds
+    const form = document.getElementById('contact-form');
+    const status = document.getElementById('form-status');
+
+    form && form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+      const name = formData.get('name');
+      const subject = formData.get('subject');
+      const message = formData.get('message');
+
+      // Your Discord webhook URL (replace with your real one)
+      const webhookURL = "https://discord.com/api/webhooks/1416191814159040602/ZmAeff-ADr0MrtkmkQ436Oq6Tks8QSRwPVZYhvHG5z54Uw5-ipYftiHkieE_0re1Src_";
+
+      const embed = {
+        title: subject || "New DM boy",
+        color: 0xF89710,
+        fields: [
+          { name: "From", value: name, inline: true },
+          { name: "Message", value: message || "(No message)", inline: false }
+        ],
+        timestamp: new Date()
+      };
+
+      try {
+        const response = await fetch(webhookURL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ embeds: [embed] })
+        });
+
+        if (response.ok) {
+          status.textContent = "Message sent to Discord ✅";
+          form.reset();
+        } else {
+          status.textContent = "Error sending message ❌";
+        }
+      } catch (err) {
+        status.textContent = "Network error ❌";
+      }
+
+      setTimeout(() => status.textContent = "", 5000);
+    });
+
+    // Current year
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
