@@ -1,0 +1,23 @@
+{
+  "name": "monstereye100_site",
+  "version": "1.0.0",
+  "description": "This repo contains a simple static site with a contact form that forwards messages to Discord via a Netlify Function (recommended for security).",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/monstereye100/monstereye100-site.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/monstereye100/monstereye100-site/issues"
+  },
+  "homepage": "https://github.com/monstereye100/monstereye100-site#readme",
+  "dependencies": {
+    "node-fetch": "^3.3.2"
+  }
+}
